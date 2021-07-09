@@ -82,8 +82,8 @@ int main()
 	CascadeClassifier faceCascade, eyesCascade; /* PreDefined trained XML classifiers with facial features */
 
 	/*Using haarcascades multilevel method --> Loading the classifiers*/
-	faceCascade.load(".\\Resources\haarcascade_frontalface_default.xml");
-	eyesCascade.load(".\Resources\haarcascade_eye_tree_eyeglasses.xml");
+	faceCascade.load("Resources/haarcascade_frontalface_default.xml");
+	eyesCascade.load("Resources/haarcascade_eye_tree_eyeglasses.xml");
 	double scale = 1;
 
 	if (cap.isOpened())
