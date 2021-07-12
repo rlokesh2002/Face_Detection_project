@@ -25,10 +25,13 @@ void detectImage(Mat& imgsrc, CascadeClassifier& faceCascade, CascadeClassifier&
 	for (int i = 0; i < faces.size(); i++)
 	{
 		Rect rect = faces[i];
+		double area = faces[i].area();
+		if (area < 12000)	continue; 	/*To filter errors, 12000 is the threshold area*/
+		cout << "Area of face " << (i + 1) << " is: " << area << endl;
 		Mat currimg = imgsrc(rect);
 		Point center;
-		Scalar faceColor = Scalar(0, 0, 255); /*Color to draw around face --> Purple */
-		Scalar eyeColor = Scalar(255, 0, 0); /*Color to draw around eyes --> Eyes */
+		Scalar faceColor = Scalar(0, 0, 255); /*Color to draw around face --> Red */
+		Scalar eyeColor = Scalar(255, 0, 0); /*Color to draw around eyes --> Blue */
 		double rad;
 
 		double aspect_ratio = (double)rect.width / rect.height; /*Finding aspect ratio of the detected client*/
@@ -39,7 +42,7 @@ void detectImage(Mat& imgsrc, CascadeClassifier& faceCascade, CascadeClassifier&
 			center.y = cvRound((rect.y + rect.height * 0.5) * scale);
 			rad = cvRound((rect.width + rect.height) * 0.25 * scale);
 			circle(imgsrc, center, rad, faceColor, 4, 8); /*Drawing cirlce around the face on imgsrc*/
-			circle(currimg, center, rad, faceColor, 4, 8); /*Drawing cirlce around the face on currimg*/
+			//circle(currimg, center, rad, faceColor, 4, 8); /*Drawing cirlce around the face on currimg*/
 		}
 		else
 		{
@@ -58,7 +61,7 @@ void detectImage(Mat& imgsrc, CascadeClassifier& faceCascade, CascadeClassifier&
 			center.y = cvRound((rect.y + nr.y + nr.height * 0.5) * scale);
 			rad = cvRound((nr.width + nr.height) * 0.25 * scale);
 			circle(imgsrc, center, rad, eyeColor, 2, 8, 0);
-			circle(currimg, center, rad, eyeColor, 2, 8, 0);
+			//circle(currimg, center, rad, eyeColor, 2, 8, 0);
 		}
 
 		/*Saves the cropped Current single face image with detected eyes*/
